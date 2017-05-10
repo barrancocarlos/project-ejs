@@ -20,11 +20,11 @@ db.once('open', function() {
 //new schema
 var ProjectSchema = mongoose.Schema({
     name: String,
-    tasks: String
+    activitie: String
 });
 
 //new model
-var Project = mongoose.model('Project', ProjectSchema);
+var Project = mongoose.model('projects', ProjectSchema);
 
 // configuration =================
 
@@ -36,17 +36,37 @@ var Project = mongoose.model('Project', ProjectSchema);
     //app.use(methodOverride());                                      // put and delete
     app.set('view engine', 'ejs');                                  // template engine
     //app.engine('.html', require('ejs').__express);                change views from .ejs to .html
-
+    app.use(express.static(__dirname + '/lib'));                    //static files
 
 
 
 // routes ======================================================================
 
-
 //index page route
-app.get('/', function(req, res) {
-    res.render('index', {test:'charly'});
+        app.get('/', function(req, res, next) {
+       var projects = Project.find().exec(function(err, data) {
+            if(err) {
+                return next(err);
+            }
+             console.log(data);
+             res.render('pages/index', { info: data});
+
+        });
+    });
+
+//add route
+app.get('/add', function(req, res) {
+    res.render('pages/add');
 });
+
+//edit route
+app.get('/edit', function(req, res) {
+
+    res.render('pages/edit', { info: data});  
+    
+});
+
+
 
 
 
@@ -58,22 +78,27 @@ app.get('/', function(req, res) {
             if(err) {
                 return next(err);
             }
+             console.log(data);
              res.json(data);
+
         });
     });
+
 
 //Post new project
     app.post('/api', function(req, res, next) {
         var project = new Project({
            name: req.body.name,
-           tasks: req.body.tasks
+           activitie: req.body.activitie
         });
         project.save(function(err, data) {
             if(err) {
                 return next(err);
             }
-            res.status(201).json(data);
-        });
+            res.redirect('/');
+
+         });
+
     });
 
 
@@ -88,7 +113,7 @@ app.get('/', function(req, res) {
     app.put('/api/:id', function(req, res, next) {
         Project.findById(req.params.id, function(err, data) {
             data.name = req.body.name;
-            data.tasks = req.body.tasks;
+            data.activitie = req.body.activitie;
             data.save(function(err, data) {
                 if(err) {
                     return next(err);
