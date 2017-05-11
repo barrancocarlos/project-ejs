@@ -31,9 +31,11 @@
                 <div class="thumbnail">
                        <div class="caption">
                         <h3><%= value.name %></h3>
-                        <p><%= value.activitie %></p>                        
-                            <a href="edit" class="btn btn-info">EDIT</a> <a href="/api/<%= value._id %>" class="btn btn-danger">DELETE</a>
-
+                        <p><%= value.activitie %></p>
+                            <a href="edit" class="btn btn-info">EDIT</a> 
+                            <form action="/api/<%= value._id %>?_method=DELETE" method="POST" >
+                                  <button type="submit" class="btn btn-danger">DELETE</button>
+                            </form>
                         </p>
                     </div>
                 </div>

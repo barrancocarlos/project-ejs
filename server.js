@@ -4,7 +4,7 @@
     var mongoose = require('mongoose');                     // mongoose for mongodb
     var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
-    //var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+    var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 
 // Db connect =================
@@ -33,7 +33,7 @@ var Project = mongoose.model('projects', ProjectSchema);
     app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
     app.use(bodyParser.json());                                     // parse application/json
     app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
-    //app.use(methodOverride());                                      // put and delete
+    app.use(methodOverride('_method'))               // put and delete
     app.set('view engine', 'ejs');                                  // template engine
     //app.engine('.html', require('ejs').__express);                change views from .ejs to .html
     app.use(express.static(__dirname + '/lib'));                    //static files
@@ -104,6 +104,8 @@ app.get('/edit', function(req, res) {
 
 //Delete project
     app.delete('/api/:id', function(req, res) {
+        console.log("fuck");
+        console.log(req.params.id);
        Project.findByIdAndRemove(req.params.id, function(err, data) {
             res.json(data);
         });
