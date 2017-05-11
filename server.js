@@ -84,6 +84,18 @@ app.get('/edit', function(req, res) {
         });
     });
 
+//get 1 project
+    app.get('/api/:id', function(req, res, next) {
+       var project = Project.findOne().exec(function(err, data) {
+            if(err) {
+                return next(err);
+            }
+             console.log(data);
+             res.render('pages/edit', { value: data})
+             // res.json(data);
+
+        });
+    });
 
 //Post new project
     app.post('/api', function(req, res, next) {
@@ -104,8 +116,6 @@ app.get('/edit', function(req, res) {
 
 //Delete project
     app.delete('/api/:id', function(req, res) {
-        console.log("fuck");
-        console.log(req.params.id);
        Project.findByIdAndRemove(req.params.id, function(err, data) {
             res.json(data);
         });
