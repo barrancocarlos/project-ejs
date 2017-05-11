@@ -123,6 +123,7 @@ app.get('/edit', function(req, res) {
 
 //Update book
     app.put('/api/:id', function(req, res, next) {
+        console.log("a carlos no le gusta fuck");
         Project.findById(req.params.id, function(err, data) {
             data.name = req.body.name;
             data.activitie = req.body.activitie;
