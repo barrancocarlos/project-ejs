@@ -117,13 +117,14 @@ app.get('/edit', function(req, res) {
 //Delete project
     app.delete('/api/:id', function(req, res) {
        Project.findByIdAndRemove(req.params.id, function(err, data) {
-            res.json(data);
+            res.redirect('/');
         });
+       
     });
 
 //Update book
     app.put('/api/:id', function(req, res, next) {
-        console.log("a carlos no le gusta fuck");
+        console.log("edit id");
         Project.findById(req.params.id, function(err, data) {
             data.name = req.body.name;
             data.activitie = req.body.activitie;
@@ -131,7 +132,7 @@ app.get('/edit', function(req, res) {
                 if(err) {
                     return next(err);
                 }
-                res.status(201).json(data);
+                res.redirect('/');
             });
         });
     });
