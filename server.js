@@ -28,7 +28,7 @@ var Project = mongoose.model('projects', ProjectSchema);
 
 // configuration =================
 
-    
+
     app.use(morgan('dev'));                                         // log every request to the console
     app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
     app.use(bodyParser.json());                                     // parse application/json
@@ -62,8 +62,8 @@ app.get('/add', function(req, res) {
 //edit route
 app.get('/edit', function(req, res) {
 
-    res.render('pages/edit', { info: data});  
-    
+    res.render('pages/edit');
+
 });
 
 
@@ -86,7 +86,7 @@ app.get('/edit', function(req, res) {
 
 //get 1 project
     app.get('/api/:id', function(req, res, next) {
-       var project = Project.findOne().exec(function(err, data) {
+       var project = Project.findById(req.params.id, function(err, data) {
             if(err) {
                 return next(err);
             }
@@ -119,7 +119,7 @@ app.get('/edit', function(req, res) {
        Project.findByIdAndRemove(req.params.id, function(err, data) {
             res.redirect('/');
         });
-       
+
     });
 
 //Update book
