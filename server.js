@@ -5,6 +5,7 @@ var mongoose = require('mongoose');                     // mongoose for mongodb
 var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+var config = require('./config/config');
 
 // Db connect =================
 require('./config/database');
@@ -31,6 +32,7 @@ require('./routes/pages')(app);
 require('./routes/api')(app);
 
 // Port ======================================================================
-var port = "3000";
-app.listen(port);
-console.log("Magic happens at " + port);
+
+app.listen(config.port);
+console.log("Magic happens at " + config.port);
+console.log(process.env.NODE_ENV);
