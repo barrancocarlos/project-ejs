@@ -1,26 +1,26 @@
 var express = require('express');
 var app = express();
+var config = require('./config/config');
 
 // import model
 var Project = require('./models/projects');
 
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var should = chai.should();
+var expect = require('chai').expect;
 
 chai.use(chaiHttp);
 
-// Test the /GET route
+// rest api test
+describe('api endpoits', function() {
 
-describe('project-api', function() {
-
-  it('should list ALL projects on /api GET', function(done) {
-  chai.request(app)
-    .get('/api')
-    .end(function(err, res){
-      res.should.have.status(200);
-      done();
-    });
-});
+  it('should list all projects on /api', function(done) {
+    chai.request(config.host + ':' + config.port)
+      .get('/api')
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
 
 });
