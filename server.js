@@ -31,6 +31,17 @@ require('./routes/pages')(app);
 // api ---------------------------------------------------------------------
 require('./routes/api')(app);
 
+// Error Handling ======================================================================
+
+app.get('*', function(req, res){
+  res.render('pages/error');
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('500: Internal Server Error');
+});
+
 // Port ======================================================================
 
 app.listen(config.port);

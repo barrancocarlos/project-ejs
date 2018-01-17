@@ -26,9 +26,9 @@ describe('/api endpoits', function() {
   // create new
   it('create new project on /api', function(done) {
     var project = {
-            name: "Mocha",
-            activitie: "Success",
-        };
+      name: "Mocha",
+      activitie: "Success",
+    };
     chai.request(config.host + ':' + config.port)
       .post('/api')
       .send(project)
@@ -38,21 +38,24 @@ describe('/api endpoits', function() {
         done();
       });
   });
-});//end api endpoits
-
-describe('/Get/:id project', function() {
-    it('gets a single project given the id', function(done) {
-      var project = new Project ({
-              name: "delete",
-              activitie: "delete",
-          });
-      project.save(function(err, data) {
-        chai.request(config.host + ':' + config.port)
-          .get('/api/:' + data.id)
-          .end(function(err, res) {
-            expect(res).to.have.status(200);
-            done();
-          });
+  //get by id
+  it('/Get/:id project', function() {
+    chai.request(config.host + ':' + config.port)
+      .get('/api/591336239372a11b24c1c16e')
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
+        expect(res).be.a('object');
+        done();
       });
-    });
-});//end get :id
+  });
+  //delete
+  it('/Get/:id project', function() {
+    chai.request(config.host + ':' + config.port)
+      .del('/api/5a5ea6493ca74705488eb796')
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+}); //end api endpoits

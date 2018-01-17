@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
+var getProjects = require('mongoose');
 
 // import model
 var Project = require('../models/projects');
@@ -29,9 +30,12 @@ module.exports = function(app) {
 
   //edit route
   app.get('/edit', function(req, res) {
-
     res.render('pages/edit');
+  });
 
+  //error
+  app.get('/error', function(req, res) {
+    res.render('pages/error');
   });
 
 
