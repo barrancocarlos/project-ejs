@@ -4,15 +4,6 @@ var app = express();
 // import model
 var Project = require('../models/projects');
 
-exports.getProjects = function (req, res) {
-  var projects = Project.find().exec(function(err, data) {
-    if (err) {
-      return next(err);
-    }
-  });
-};
-
-
 //api function export
 module.exports = function(app) {
 

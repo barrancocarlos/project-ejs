@@ -1,27 +1,28 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-var getProjects = require('mongoose');
 
 // import model
 var Project = require('../models/projects');
 
+//GET ALL Function
+function getProjects (req, res) {
+  var projects = Project.find().exec(function(err, data) {
+    if (err) {
+      return next(err);
+    }
+    console.log(data);
+    res.render('pages/index', {
+      info: data
+    });
+  });
+}
+
 //api function export
 module.exports = function(app) {
 
-  //index page route
-  app.get('/', function(req, res, next) {
-    var projects = Project.find().exec(function(err, data) {
-      if (err) {
-        return next(err);
-      }
-      console.log(data);
-      res.render('pages/index', {
-        info: data
-      });
-
-    });
-  });
+  //GET ALL Function
+  app.get('/', getProjects);
 
   //add route
   app.get('/add', function(req, res) {
