@@ -4,25 +4,14 @@ var mongoose = require('mongoose');
 
 // import model
 var Project = require('../models/projects');
-
-//GET ALL Function
-function getProjects (req, res) {
-  var projects = Project.find().exec(function(err, data) {
-    if (err) {
-      return next(err);
-    }
-    console.log(data);
-    res.render('pages/index', {
-      info: data
-    });
-  });
-}
+// mport controller
+var controller = require('./controller');
 
 //api function export
 module.exports = function(app) {
 
   //GET ALL Function
-  app.get('/', getProjects);
+  app.get('/', controller.getProjects);
 
   //add route
   app.get('/add', function(req, res) {
